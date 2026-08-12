@@ -1,0 +1,68 @@
+import { useEffect, useState } from 'react'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { AnimatePresence, motion } from 'framer-motion'
+import { Sidebar } from './components/Sidebar'
+import { PageHeader } from './components/PageHeader'
+import { HomePage } from './pages/HomePage'
+import { SubjectsPage } from './pages/SubjectsPage'
+import { FlashcardsPage } from './pages/FlashcardsPage'
+import { TestsPage } from './pages/TestsPage'
+import { TestDetailPage } from './pages/TestDetailPage'
+import { KnowledgePage } from './pages/KnowledgePage'
+import { TutorPage } from './pages/TutorPage'
+import { ProfilePage } from './pages/ProfilePage'
+import { NotFoundPage } from './pages/NotFoundPage'
+import { ResultsPage } from './pages/ResultsPage'
+import { AdminPage } from './pages/AdminPage'
+import i18n from './i18n'
+import { useThemeStore } from './store/themeStore'
+
+function App() {
+  const { darkMode, language } = useThemeStore()
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', darkMode)
+  }, [darkMode])
+  useEffect(() => { i18n.changeLanguage(language) }, [language])
+
+  return (
+    <BrowserRouter>
+      <div className="min-h-screen bg-[#F8FAFC] text-slate-950 transition-colors dark:bg-slate-950 dark:text-slate-100">
+        <div className="mx-auto flex min-h-screen max-w-[1600px] gap-6 p-3 sm:p-5 lg:p-8">
+          <Sidebar open={menuOpen} onClose={() => setMenuOpen(false)} />
+
+          <main className="min-w-0 flex-1">
+            <PageHeader onMenu={() => setMenuOpen(true)} />
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.25 }}
+              >
+                <Routes>
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/subjects" element={<SubjectsPage />} />
+                  <Route path="/fanlar" element={<SubjectsPage />} />
+                  <Route path="/flashcards" element={<FlashcardsPage />} />
+                  <Route path="/tests" element={<TestsPage />} />
+                  <Route path="/tests/:id" element={<TestDetailPage />} />
+                  <Route path="/knowledge" element={<KnowledgePage />} />
+                  <Route path="/tutor" element={<TutorPage />} />
+                  <Route path="/profile" element={<ProfilePage />} />
+                  <Route path="/results" element={<ResultsPage />} />
+                  <Route path="/admin" element={<AdminPage />} />
+                  <Route path="/analytics" element={<ProfilePage />} />
+                  <Route path="*" element={<NotFoundPage />} />
+                </Routes>
+              </motion.div>
+            </AnimatePresence>
+          </main>
+        </div>
+      </div>
+    </BrowserRouter>
+  )
+}
+
+export default App
