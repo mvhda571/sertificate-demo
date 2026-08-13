@@ -1,14 +1,21 @@
 import { useMemo, useState } from 'react'
-import { ArrowLeft, Clock, Save } from 'lucide-react'
-import { Link, useParams } from 'react-router-dom'
-import { useAdminTests } from '../hooks/useAdminTests'
+import { Link, Navigate, useParams } from 'react-router-dom'
+import { HiArrowLeft, HiRefresh } from 'react-icons/hi'
+import { examSubjects, generateExam } from '../utils/examGenerator'
 import { useTestStore } from '../store/useTestStore'
 
+const difficultyLabel = { easy: 'Oson', medium: 'O‘rta', hard: 'Qiyin' }
+const difficultyClass = { easy: 'bg-emerald-50 text-emerald-700', medium: 'bg-amber-50 text-amber-700', hard: 'bg-red-50 text-red-700' }
+
 export function TestDetailPage() {
-  const { id } = useParams(); const { data = [] } = useAdminTests(); const test = data.find(t => t.id === id)
-  const [answers, setAnswers] = useState({}); const completeTest = useTestStore(s => s.completeTest); const saveTest = useTestStore(s => s.saveTest)
-  const questions = useMemo(() => Array.from({length: 5}, (_,i) => ({id:i+1,text:`${i+1}-savol. Berilgan mavzu bo‘yicha to‘g‘ri javobni belgilang.`, options:['12','18','24','36'], answer:i%4, explanation:'Bu yechim asosiy qoida va formulani ketma-ket qo‘llash orqali topiladi.'})), [])
-  if (!test) return <div className="card-panel p-8">Test topilmadi yoki yuklanmoqda.</div>
-  const submit = () => { const correct = questions.filter(q => answers[q.id] === q.answer).length; completeTest({id:Date.now(),testId:id,title:test.title,score:correct,percent:correct/5*100,errors:questions.filter(q => answers[q.id] !== q.answer)}); alert(`Natija: ${correct}/5 (${correct/5*100}%)`) }
-  return <div className="space-y-6"><Link to="/tests" className="inline-flex items-center gap-2 text-sm text-slate-500"><ArrowLeft className="h-4 w-4"/> Testlarga qaytish</Link><section className="hero-panel flex flex-wrap justify-between gap-4"><div><p className="eyebrow">{test.subject}</p><h1 className="page-title">{test.title}</h1></div><div className="flex items-center gap-2 rounded-2xl bg-red-50 px-4 py-3 font-bold text-red-600 dark:bg-red-500/10"><Clock/> 59:42</div></section>{questions.map(q => <div key={q.id} className="card-panel p-6"><h2 className="font-semibold">{q.text}</h2><div className="mt-4 grid gap-2 sm:grid-cols-2">{q.options.map((o,i) => <button key={o} onClick={() => setAnswers(a => ({...a,[q.id]:i}))} className={`rounded-xl border p-3 text-left ${answers[q.id] === i ? 'border-blue-500 bg-blue-50 text-blue-700 dark:bg-blue-500/10' : 'border-slate-200 dark:border-slate-700'}`}>{String.fromCharCode(65+i)}. {o}</button>)}</div></div>)}<div className="flex justify-end gap-3"><button onClick={() => saveTest(test)} className="btn-secondary"><Save/> Saqlash</button><button onClick={submit} className="btn-primary">Testni yakunlash</button></div></div>
+  const { id } = useParams(); const subject = examSubjects.find(item => item.id === id)
+  const [attemptKey, setAttemptKey] = useState(0); const questions = useMemo(() => { void attemptKey; return generateExam(id) }, [id, attemptKey])
+  const [answers, setAnswers] = useState({}); const [result, setResult] = useState(null); const completeTest = useTestStore(state => state.completeTest)
+  if (!subject) return <Navigate to="/tests" replace/>
+  const retake = () => { setAnswers({}); setResult(null); setAttemptKey(value => value + 1) }
+  const submit = () => { const correct=questions.filter((q,index)=>answers[index]===q.answer).length; const errors=questions.filter((q,index)=>answers[index]!==q.answer).map(q=>({...q,front:q.text,back:q.options[q.answer]})); const percent=Math.round(correct/questions.length*100); setResult({correct,percent}); completeTest({id:Date.now(),testId:id,type:'mock',title:`${subject.title} Mock Exam`,score:correct,percent,errors}) }
+  return <div className="space-y-6"><div className="flex flex-wrap items-center justify-between gap-3"><Link to="/tests" className="inline-flex items-center gap-2 text-sm font-bold text-slate-500"><HiArrowLeft/> Testlarga qaytish</Link><button onClick={retake} className="btn-secondary"><HiRefresh/> Yangi variant</button></div><section className="hero-panel"><p className="eyebrow">{subject.title}</p><h1 className="page-title">Milliy Sertifikat sinov testi</h1><p className="mt-2 text-sm text-slate-500">20 savol: 4 ta oson, 10 ta o‘rta, 6 ta qiyin.</p></section>
+    {questions.map((question,index)=><article key={question.id} className="card-panel p-6"><div className="flex items-start justify-between gap-3"><h2 className="font-semibold">{index+1}. {question.text}</h2><span className={`pill shrink-0 ${difficultyClass[question.difficulty]}`}>{difficultyLabel[question.difficulty]}</span></div><div className="mt-4 grid gap-2 sm:grid-cols-2">{question.options.map((option,optionIndex)=><button key={`${option}-${optionIndex}`} disabled={Boolean(result)} onClick={()=>setAnswers({...answers,[index]:optionIndex})} className={`rounded-xl border p-3 text-left text-sm ${answers[index]===optionIndex?'border-blue-500 bg-blue-50 text-blue-800 dark:bg-blue-500/10 dark:text-blue-200':'border-slate-200 dark:border-slate-700'}`}>{String.fromCharCode(65+optionIndex)}. {option}</button>)}</div>{result&&<p className={`mt-3 text-sm ${answers[index]===question.answer?'text-emerald-600':'text-red-600'}`}>{question.explanation}</p>}</article>)}
+    <div className="flex justify-end">{result?<div className="card-panel flex items-center gap-5 p-5"><div><p className="text-sm text-slate-500">Natija</p><b className="text-2xl">{result.correct}/20 · {result.percent}%</b></div><button onClick={retake} className="btn-primary"><HiRefresh/> Qayta ishlash</button></div>:<button disabled={Object.keys(answers).length<questions.length} onClick={submit} className="btn-primary disabled:opacity-40">Testni yakunlash</button>}</div>
+  </div>
 }

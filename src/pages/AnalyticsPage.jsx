@@ -1,4 +1,4 @@
-import { BarChart3, TrendingUp } from 'lucide-react'
+import { BarChart3, TrendingUp } from '../components/AppIcons'
 
 const leaderboard = [
   { name: 'Nilufar', score: 152, rank: 1 },

@@ -1,4 +1,4 @@
-import { Download, Network } from 'lucide-react'
+import { Download, Network } from '../components/AppIcons'
 import { motion } from 'framer-motion'
 
 const nodes = [{x:50,y:50,t:'Matematika',c:'bg-blue-600'},{x:18,y:20,t:'Algebra',c:'bg-emerald-500'},{x:82,y:18,t:'Geometriya',c:'bg-orange-500'},{x:18,y:80,t:'Funksiya',c:'bg-violet-500'},{x:82,y:80,t:'Formulalar',c:'bg-rose-500'}]

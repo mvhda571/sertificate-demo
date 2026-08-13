@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Edit3, FilePlus2, Loader2, Plus, Save, Trash2, X } from 'lucide-react'
+import { Edit3, FilePlus2, Loader2, Plus, Save, Trash2, X } from '../components/AppIcons'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { useAdminTests } from '../hooks/useAdminTests'

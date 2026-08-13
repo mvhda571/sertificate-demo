@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Award, Download, Flag, Play, RefreshCcw, RotateCcw, XCircle } from 'lucide-react'
+import { Trophy as Award, Download, Flag, Play, RefreshCcw, RotateCcw, XCircle } from '../components/AppIcons'
 import { useAcademyStore } from '../store/academyStore'
 
 const questions = Array.from({ length: 40 }, (_, index) => ({
@@ -30,7 +30,7 @@ export function MockTestPage() {
   const [submitted, setSubmitted] = useState(false)
   const [score, setScore] = useState(0)
   const [tab, setTab] = useState('exam')
-  const [studentName, setStudentName] = useState('Muslima Karimova')
+  const [studentName, setStudentName] = useState('Muslima')
   const { errorBank, saveTest } = useAcademyStore()
 
   useEffect(() => {

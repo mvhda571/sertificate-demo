@@ -10,6 +10,10 @@ const resources = {
     dashboard:'Home', subjects:'Subjects', tests:'Mock exams', flashcards:'Flashcards', graph:'Knowledge map', tutor:'AI Tutor', results:'My results', admin:'Teacher panel', leaderboard:'Profile',
     homeSubtitle:'Prepare for a top certificate grade with interactive exams, smart analytics, and a personalized study plan.',
   }},
+  ru: { translation: {
+    dashboard:'Главная', subjects:'Предметы', tests:'Пробные тесты', flashcards:'Карточки', graph:'Карта знаний', tutor:'AI Репетитор', results:'Мои результаты', admin:'Панель учителя', leaderboard:'Профиль',
+    homeSubtitle:'Готовьтесь к высокому уровню сертификата с интерактивными тестами, аналитикой и личным учебным планом.',
+  }},
 }
 
 i18n.use(initReactI18next).init({resources,lng:'uz',fallbackLng:'uz',interpolation:{escapeValue:false}})

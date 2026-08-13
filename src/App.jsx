@@ -16,10 +16,22 @@ import { ResultsPage } from './pages/ResultsPage'
 import { AdminPage } from './pages/AdminPage'
 import i18n from './i18n'
 import { useThemeStore } from './store/themeStore'
+import { useUserStore } from './store/useUserStore'
+import { AuthGate } from './components/AuthGate'
+import { LessonPage } from './pages/LessonPage'
+import { MockTestPage } from './pages/MockTestPage'
+import { HistoryGradesPage } from './pages/HistoryGradesPage'
+import { HistoryGradePage } from './pages/HistoryGradePage'
+import { MathGradesPage, MathTrackPage } from './pages/MathGradesPage'
+import { UzbekGradesPage } from './pages/UzbekGradesPage'
+import { UzbekGradePage } from './pages/UzbekGradePage'
+import { LiteratureGradesPage } from './pages/LiteratureGradesPage'
+import { LiteratureGradePage } from './pages/LiteratureGradePage'
 
 function App() {
   const { darkMode, language } = useThemeStore()
   const [menuOpen, setMenuOpen] = useState(false)
+  const isAuthenticated = useUserStore((state) => state.isAuthenticated)
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', darkMode)
@@ -28,6 +40,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      {!isAuthenticated && <AuthGate />}
       <div className="min-h-screen bg-[#F8FAFC] text-slate-950 transition-colors dark:bg-slate-950 dark:text-slate-100">
         <div className="mx-auto flex min-h-screen max-w-[1600px] gap-6 p-3 sm:p-5 lg:p-8">
           <Sidebar open={menuOpen} onClose={() => setMenuOpen(false)} />
@@ -45,6 +58,16 @@ function App() {
                   <Route path="/" element={<HomePage />} />
                   <Route path="/subjects" element={<SubjectsPage />} />
                   <Route path="/fanlar" element={<SubjectsPage />} />
+                  <Route path="/subjects/tarix" element={<HistoryGradesPage />} />
+                  <Route path="/subjects/tarix/grade/:gradeId" element={<HistoryGradePage />} />
+                  <Route path="/subjects/ona-tili" element={<UzbekGradesPage />} />
+                  <Route path="/subjects/ona-tili/grade/:gradeId" element={<UzbekGradePage />} />
+                  <Route path="/subjects/adabiyot" element={<LiteratureGradesPage />} />
+                  <Route path="/subjects/adabiyot/grade/:gradeId" element={<LiteratureGradePage />} />
+                  <Route path="/subjects/matematika/grades" element={<MathGradesPage />} />
+                  <Route path="/subjects/matematika/grade/:gradeId" element={<MathTrackPage />} />
+                  <Route path="/subjects/:subjectId" element={<LessonPage />} />
+                  <Route path="/subjects/:subjectId/mock" element={<MockTestPage />} />
                   <Route path="/flashcards" element={<FlashcardsPage />} />
                   <Route path="/tests" element={<TestsPage />} />
                   <Route path="/tests/:id" element={<TestDetailPage />} />

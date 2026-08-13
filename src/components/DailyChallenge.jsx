@@ -1,4 +1,4 @@
-import { CheckCircle2, Trophy } from 'lucide-react'
+import { CheckCircle2, Trophy } from './AppIcons'
 import { toast } from 'sonner'
 import { useStreakStore } from '../store/useStreakStore'
 import { useUserStore } from '../store/useUserStore'

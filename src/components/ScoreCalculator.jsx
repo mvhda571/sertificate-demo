@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { Calculator } from 'lucide-react'
+import { Calculator } from './AppIcons'
 
 const weights = { math: 2.1, history: 1.1, language: 1.1 }
 const targets = { 'A+': 90, A: 80, 'B+': 70, B: 60 }

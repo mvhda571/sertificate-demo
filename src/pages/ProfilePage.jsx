@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Bell, Medal, Send, Trash2, User } from 'lucide-react'
+import { Bell, Medal, Send, Trash2, User } from '../components/AppIcons'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { useUserStore } from '../store/useUserStore'
