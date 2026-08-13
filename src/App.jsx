@@ -13,7 +13,6 @@ import { TutorPage } from './pages/TutorPage'
 import { ProfilePage } from './pages/ProfilePage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { ResultsPage } from './pages/ResultsPage'
-import { AdminPage } from './pages/AdminPage'
 import i18n from './i18n'
 import { useThemeStore } from './store/themeStore'
 import { useUserStore } from './store/useUserStore'
@@ -75,7 +74,7 @@ function App() {
                   <Route path="/tutor" element={<TutorPage />} />
                   <Route path="/profile" element={<ProfilePage />} />
                   <Route path="/results" element={<ResultsPage />} />
-                  <Route path="/admin" element={<AdminPage />} />
+                  <Route path="/login" element={<HomePage />} />
                   <Route path="/analytics" element={<ProfilePage />} />
                   <Route path="*" element={<NotFoundPage />} />
                 </Routes>

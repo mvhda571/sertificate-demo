@@ -14,7 +14,7 @@ export function AuthGate() {
     <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,.2),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(59,130,246,.18),transparent_38%)]"/>
     <div className="relative grid w-full max-w-5xl overflow-hidden rounded-[32px] border border-white/10 bg-white shadow-2xl dark:bg-slate-900 lg:grid-cols-[1.05fr_.95fr]">
       <section className="hidden bg-emerald-600 p-10 text-white lg:flex lg:flex-col lg:justify-between">
-        <div className="flex items-center gap-3"><span className="grid h-12 w-12 place-items-center rounded-2xl bg-white/15"><FiBookOpen className="h-6 w-6"/></span><div><b>Certificate Academy</b><p className="text-sm text-emerald-100">6-sinfdan natijagacha</p></div></div>
+        <div className="flex items-center gap-3"><span className="grid h-12 w-12 place-items-center rounded-2xl bg-white/15"><FiBookOpen className="h-6 w-6"/></span><div><b>Certificate Academy</b><p className="text-sm text-emerald-100">Milliy Sertifikat Tayyorgarlik Tizimi</p></div></div>
         <div><p className="text-sm font-bold uppercase tracking-[.25em] text-emerald-100">Milliy sertifikat</p><h1 className="mt-4 text-4xl font-black leading-tight">Bilimingizni aniq reja bilan mustahkamlang.</h1><p className="mt-4 max-w-md leading-7 text-emerald-50">Darsliklar, qisqa konspektlar, progress testlar va real imtihon simulyatsiyasi bir platformada.</p></div>
         <p className="text-sm text-emerald-100">Har bir natija saqlanadi va shaxsiy yo‘nalishingizni shakllantiradi.</p>
       </section>
