@@ -1,8 +1,13 @@
 import historyTopics from './historyTopics.json'
+import historyPdfNotes from './historyPdfNotes.json'
 
 const lesson = (title, pages, summary, topics, facts) => ({ title, pages, summary, topics, facts })
 
 const grades = {
+  5: {
+    period: 'Tarixdan hikoyalar', count: 52,
+    lessons: historyPdfNotes[5],
+  },
   6: {
     period: 'Qadimgi dunyo tarixi', count: 44,
     lessons: [
@@ -94,6 +99,11 @@ const groupSizes = {
 }
 
 const expandLessons = (grade, data) => {
+  if (grade === 5) return data.lessons.map((item, index) => ({
+    ...item,
+    id: index + 1,
+    pages: item.pages || index + 1,
+  }))
   const topics = historyTopics[grade]
   const expanded = []
   let topicIndex = 0
@@ -118,10 +128,14 @@ const expandLessons = (grade, data) => {
 }
 
 export const historyGrades = Object.fromEntries(Object.entries(grades).map(([grade, data]) => {
-  const lessons = expandLessons(Number(grade), data)
+  const gradeNumber = Number(grade)
+  const lessons = expandLessons(gradeNumber, data).map((item, index) => {
+    const pdfNote = historyPdfNotes[grade]?.[index]
+    return pdfNote ? { ...item, ...pdfNote, id: item.id, pages: item.pages } : item
+  })
   const readyLessons = lessons.map((item, index) => ({ ...item, test: (index + 1) % 3 === 0 ? makeQuestions(lessons, index + 1) : null }))
   return [grade, {
-    ...data, grade: Number(grade), pdf: `/textbooks/tarix-${grade}.pdf`, lessons: readyLessons,
+    ...data, grade: gradeNumber, pdf: `/textbooks/tarix-${grade}.pdf`, lessons: readyLessons,
     mock: Array.from({ length: 10 }, (_, index) => {
       const source = lessons[index % lessons.length]
       const fact = source.facts[index % source.facts.length]

@@ -8,9 +8,21 @@ const advice = {
 }
 
 export function TeacherAdvice({ subject, lesson }) {
-  const content = (advice[subject] || advice.tarix)(lesson)
+  const hasPdfAdvice = subject === 'tarix' && lesson.teacherAdvice
+  const hasMathAdvice = subject === 'matematika' && lesson.teacherAdvice
+  const content = lesson.teacherAdvice || (advice[subject] || advice.tarix)(lesson)
+  const labels = hasPdfAdvice
+    ? ['Xotira ilgagi', 'Imtihon tuzog‘i', 'Mantiqiy zanjir']
+    : hasMathAdvice
+      ? ['Eslab qol', 'Qisqa layfhak', 'Amaliy qo‘llash']
+    : ['Mavzuning mag‘zi', 'Ko‘p uchraydigan tuzoq', 'Amaliy bog‘lanish']
+
   return <section className="mt-7 overflow-hidden rounded-2xl border border-amber-200 bg-amber-50/60 dark:border-amber-500/20 dark:bg-amber-500/5">
     <div className="flex items-center gap-2 border-b border-amber-200 px-5 py-4 font-black text-amber-800 dark:border-amber-500/20 dark:text-amber-300"><HiLightBulb/> Ustoz maslahati</div>
-    <div className="grid gap-4 p-5 text-sm leading-6 sm:grid-cols-3"><div><b className="block text-slate-950 dark:text-white">Mavzuning mag‘zi</b><p className="mt-1 text-slate-600 dark:text-slate-300">{content.essence}</p></div><div><b className="flex items-center gap-1 text-slate-950 dark:text-white"><HiExclamation className="text-amber-600"/> Ko‘p uchraydigan tuzoq</b><p className="mt-1 text-slate-600 dark:text-slate-300">{content.trap}</p></div><div><b className="block text-slate-950 dark:text-white">Amaliy bog‘lanish</b><p className="mt-1 text-slate-600 dark:text-slate-300">{content.practical}</p></div></div>
+    <div className="grid gap-4 p-5 text-sm leading-6 sm:grid-cols-3">
+      <div><b className="block text-slate-950 dark:text-white">{labels[0]}</b><p className="mt-1 text-slate-600 dark:text-slate-300">{content.essence}</p></div>
+      <div><b className="flex items-center gap-1 text-slate-950 dark:text-white"><HiExclamation className="text-amber-600"/> {labels[1]}</b><p className="mt-1 text-slate-600 dark:text-slate-300">{content.trap}</p></div>
+      <div><b className="block text-slate-950 dark:text-white">{labels[2]}</b><p className="mt-1 text-slate-600 dark:text-slate-300">{content.practical}</p></div>
+    </div>
   </section>
 }

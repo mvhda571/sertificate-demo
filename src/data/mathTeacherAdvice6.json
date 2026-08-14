@@ -1,0 +1,290 @@
+{
+    "1":  {
+              "sourceTitle":  "🌸 1–2. Sonning bo\u0027luvchilari va karralisi. Juft va toq sonlar",
+              "essence":  "\u0027Karrali\u0027 — bu son BOSHQA songa bo\u0027linadi (masalan, 15 soni 5 ning karralisi). \u0027Bo\u0027luvchi\u0027 esa — bu son boshqa sonni bo\u0027lyapti (5 soni 15 ning bo\u0027luvchisi). Ikkalasi bir tanganing ikki tomoni!",
+              "trap":  "Ko\u0027paytma ko\u0027paytuvchilar tartibiga bog\u0027liq bo\u0027lmagani uchun tekshirishni 6·6 ko\u0027paytmada to\u0027xtatish mumkin — undan keyingi sonlar avvalgilarni takrorlaydi, xolos.",
+              "practical":  "36 sonining barcha bo\u0027luvchilarini toping."
+          },
+    "2":  {
+              "sourceTitle":  "🎯 3–5. Sonlarning 10 ga, 5 ga va 2 ga bo\u0027linish belgilari",
+              "essence":  "Faqat sonning OXIRGI raqamiga qara — butun sonni bo\u0027lishning hojati yo\u0027q! 0 va 5 → 5 ga bo\u0027linadi; 0 → 10 ga bo\u0027linadi; juft raqam (0,2,4,6,8) → 2 ga bo\u0027linadi.",
+              "trap":  "Faqat sonning OXIRGI raqamiga qara — butun sonni bo\u0027lishning hojati yo\u0027q! 0 va 5 → 5 ga bo\u0027linadi; 0 → 10 ga bo\u0027linadi; juft raqam (0,2,4,6,8) → 2 ga bo\u0027linadi.",
+              "practical":  "Katta sonlarni har safar \"ustun usuli\"da bo\u0027lib o\u0027tirmasdan, faqat oxirgi raqamiga qarab bo\u0027linish-bo\u0027linmasligini bilib olsak-chi? Aynan shu uchun bo\u0027linish belgilari kerak bo\u0027ladi."
+          },
+    "3":  {
+              "sourceTitle":  "🌟 6–7. Sonlarning 9 ga va 3 ga bo\u0027linish belgilari",
+              "essence":  "9 ga bo\u0027linish → 3 ga ham bo\u0027linadi (chunki 9 = 3·3). Lekin 3 ga bo\u0027linadigan har bir son 9 ga bo\u0027linavermaydi! Masalan, 12 soni 3 ga bo\u0027linadi, lekin 9 ga bo\u0027linmaydi.",
+              "trap":  "Agar son 2 ga HAM, 3 ga HAM bo\u0027linsa — u albatta 6 ga ham bo\u0027linadi! Masalan, 618 soni 2 ga ham, 3 ga ham bo\u0027linadi (raqamlar yig\u0027indisi 6+1+8=15), demak 618 soni 6 ga ham bo\u0027linadi.",
+              "practical":  "8964 soni 9 ga bo\u0027linadimi?"
+          },
+    "4":  {
+              "sourceTitle":  "🔍 10. Tub va murakkab sonlar",
+              "essence":  "2 — yagona JUFT tub son! Undan boshqa barcha tub sonlar toq. Tub sonlar cheksiz ko\u0027p.",
+              "trap":  "2 — yagona JUFT tub son! Undan boshqa barcha tub sonlar toq. Tub sonlar cheksiz ko\u0027p.",
+              "practical":  "25 dan katta bo\u0027lmagan tub sonlarni toping."
+          },
+    "5":  {
+              "sourceTitle":  "🧩 11–12. Natural sonlarni tub ko\u0027paytuvchilarga ajratish",
+              "essence":  "Har qanday murakkab sonni tub sonlarning ko\u0027paytmasi shaklida yozish mumkin — xuddi konstruktorni eng kichik detallarga ajratgandek.",
+              "trap":  "Ustun usulida bo\u0027lishda har doim ENG KICHIK tub sondan (2 dan) boshlang, keyin 3, 5, 7... ga o\u0027ting. Shunda hech qanday bo\u0027luvchini o\u0027tkazib yubormaysiz.",
+              "practical":  "36 sonini tub ko\u0027paytuvchilarga ajrating."
+          },
+    "6":  {
+              "sourceTitle":  "🤝 13–14. Eng katta umumiy bo\u0027luvchi (EKUB). O\u0027zaro tub sonlar",
+              "essence":  "Agar katta son kichik songa qoldiqsiz bo\u0027linsa (masalan, 125 va 25), unda EKUB — bu kichik sonning o\u0027zi: EKUB(125, 25) = 25.",
+              "trap":  "Agar katta son kichik songa qoldiqsiz bo\u0027linsa (masalan, 125 va 25), unda EKUB — bu kichik sonning o\u0027zi: EKUB(125, 25) = 25.",
+              "practical":  "EKUB(36, 84) ni toping."
+          },
+    "7":  {
+              "sourceTitle":  "🔗 15–16. Eng kichik umumiy karrali (EKUK)",
+              "essence":  "EKUB — ENG KATTA (bo\u0027luvchi qidiryapmiz, u kichik bo\u0027lgani sari ko\u0027p sonlarga mos keladi, shuning uchun ENG KATTASINI qidiramiz). EKUK — ENG KICHIK (karrali qidiryapmiz, ular cheksiz ko\u0027p, ENG KICHIGINI topamiz).",
+              "trap":  "Agar sonlar o\u0027zaro tub bo\u0027lsa (EKUB = 1), ularning EKUK i shu sonlarning oddiy ko\u0027paytmasiga teng. Agar bir son ikkinchisiga bo\u0027linsa, katta son o\u0027zi ularning EKUK i bo\u0027ladi.",
+              "practical":  "EKUK(30, 36) ni toping."
+          },
+    "8":  {
+              "sourceTitle":  "✂️ 21–23. Kasrlarni qisqartirish",
+              "essence":  "Har qanday kasrni ham qisqartirib bo\u0027lmaydi — faqat surat va maxraj 1 dan farqli umumiy bo\u0027luvchiga ega bo\u0027lsagina qisqartiriladi. Masalan, 8/9 ni qisqartirib bo\u0027lmaydi.",
+              "trap":  "Bir martada EKUB ga qisqartirish qiyin bo\u0027lsa — ketma-ket kichik sonlarga (2 ga, 3 ga, 5 ga...) bir necha marta qisqartiring. Natija baribir bir xil bo\u0027ladi!",
+              "practical":  "384/512 kasrni qisqartiring."
+          },
+    "9":  {
+              "sourceTitle":  "🔗 24–26. Kasrlarni umumiy maxrajga keltirish",
+              "essence":  "Agar bir kasrning maxraji ikkinchisiga bo\u0027linsa (masalan, 100 va 25), umumiy maxraj — kattasining o\u0027zi bo\u0027ladi. Agar maxrajlar o\u0027zaro tub bo\u0027lsa, umumiy maxraj ularning oddiy ko\u0027paytmasiga teng.",
+              "trap":  "Agar bir kasrning maxraji ikkinchisiga bo\u0027linsa (masalan, 100 va 25), umumiy maxraj — kattasining o\u0027zi bo\u0027ladi. Agar maxrajlar o\u0027zaro tub bo\u0027lsa, umumiy maxraj ularning oddiy ko\u0027paytmasiga teng.",
+              "practical":  "7/12 va 11/18 kasrlarni umumiy maxrajga keltiring."
+          },
+    "10":  {
+               "sourceTitle":  "⚔️ 27–28. Har xil maxrajli kasrlarni taqqoslash",
+               "essence":  "Qaysi mashina ko\u0027proq yo\u0027l yurgan: 2/7 qismini yoki 2/5 qismini bosib o\u0027tgan mashina? Suratlari bir xil bo\u0027lsa, maxraji kichikroq kasr — kattaroq (chunki bo\u0027lak kattaroq bo\u0027ladi)!",
+               "trap":  "Kasrlarni to\u0027g\u0027ridan-to\u0027g\u0027ri umumiy maxrajga keltirmasdan ham, ularni 1 ga yoki 1/2 ga solishtirib tez taqqoslash mumkin — ba\u0027zan bu ancha tezroq!",
+               "practical":  "13/14 va 16/25 kasrlarni taqqoslang."
+           },
+    "11":  {
+               "sourceTitle":  "➕➖ 31–33. Har xil maxrajli kasrlarni qo\u0027shish va ayirish",
+               "essence":  "Agar natija qisqaradigan kasr bo\u0027lsa — uni albatta qisqartiring! Agar noto\u0027g\u0027ri kasr chiqsa — undan butun qismini ajrating.",
+               "trap":  "Agar natija qisqaradigan kasr bo\u0027lsa — uni albatta qisqartiring! Agar noto\u0027g\u0027ri kasr chiqsa — undan butun qismini ajrating.",
+               "practical":  "3/4 + 1/10 yig\u0027indini toping."
+           },
+    "12":  {
+               "sourceTitle":  "🎒 34–37. Aralash sonlarni qo\u0027shish va ayirish",
+               "essence":  "📌 Qo\u0027shish: avval kasr qismlar umumiy maxrajga keltiriladi, so\u0027ng butun qismlar alohida, kasr qismlar alohida qo\u0027shiladi.",
+               "trap":  "Agar kamayuvchining kasr qismi ayriluvchinikidan kichik bo\u0027lsa — avval kamayuvchining butun qismidan 1 birlikni kasr qismiga qo\u0027shib oling (masalan, 5 = 4 + 36/36), keyin bemalol ayiring.",
+               "practical":  "4 7/10 + 3 4/15 ni hisoblang."
+           },
+    "13":  {
+               "sourceTitle":  "🍰 43–45. Sonning qismini topish",
+               "essence":  "5 km li yo\u0027lning 2/5 qismiga asfalt yotqizilgan bo\u0027lsa, necha km ga asfalt yotqizilgan? Bunday masalalar ko\u0027paytirish bilan yechiladi.",
+               "trap":  "5 km li yo\u0027lning 2/5 qismiga asfalt yotqizilgan bo\u0027lsa, necha km ga asfalt yotqizilgan? Bunday masalalar ko\u0027paytirish bilan yechiladi.",
+               "practical":  "49 ning 5/7 qismini toping."
+           },
+    "14":  {
+               "sourceTitle":  "📐 46–48. Ko\u0027paytirishning taqsimot qonuni va uning tatbiqlari",
+               "essence":  "📌 Taqsimot qonuni: c·(a + b) = a·c + b·c — sonni yig\u0027indiga ko\u0027paytirish uchun uni har bir qo\u0027shiluvchiga alohida ko\u0027paytirib, natijalarni qo\u0027shish mumkin.",
+               "trap":  "📌 Taqsimot qonuni: c·(a + b) = a·c + b·c — sonni yig\u0027indiga ko\u0027paytirish uchun uni har bir qo\u0027shiluvchiga alohida ko\u0027paytirib, natijalarni qo\u0027shish mumkin.",
+               "practical":  "4·18 ni qulay usulda hisoblang."
+           },
+    "15":  {
+               "sourceTitle":  "🔄 49–50. O\u0027zaro teskari sonlar",
+               "essence":  "0 ning teskari soni YO\u0027Q — chunki hech qanday songa ko\u0027paytirilganda 0·x = 1 bo\u0027lmaydi!",
+               "trap":  "0 ning teskari soni YO\u0027Q — chunki hech qanday songa ko\u0027paytirilganda 0·x = 1 bo\u0027lmaydi!",
+               "practical":  "3 1/8 soniga teskari sonni toping."
+           },
+    "16":  {
+               "sourceTitle":  "➗ 51–53. Oddiy kasrlarni bo\u0027lish",
+               "essence":  "📌 Kasrni kasrga bo\u0027lish uchun birinchi kasrni ikkinchi kasrga teskari son bilan ko\u0027paytirish kerak: k/n : p/q = k/n · q/p.",
+               "trap":  "\"Bo\u0027lishni ko\u0027paytirishga aylantirish\" — bo\u0027luvchini teskarisiga aylantirib, amalni bo\u0027lishdan ko\u0027paytirishga o\u0027zgartirish, xolos!",
+               "practical":  "6/7 : 9/10 ni hisoblang."
+           },
+    "17":  {
+               "sourceTitle":  "🔙 54. Qismiga ko\u0027ra sonning o\u0027zini topish",
+               "essence":  "Bir kitobning 2/5 qismi 36 bet bo\u0027lsa, kitob nechi betdan iborat? Bu safar — teskari masala: qismi ma\u0027lum, butunini topish kerak.",
+               "trap":  "Bir kitobning 2/5 qismi 36 bet bo\u0027lsa, kitob nechi betdan iborat? Bu safar — teskari masala: qismi ma\u0027lum, butunini topish kerak.",
+               "practical":  "3/4 qismi 18 ga teng bo\u0027lgan sonni toping."
+           },
+    "18":  {
+               "sourceTitle":  "✖️ 59–61. Proporsiyaning asosiy xossasi",
+               "essence":  "📌 a/b = c/d proporsiya uchun a·d = b·c tenglik o\u0027rinli — proporsiyaning chetki hadlari ko\u0027paytmasi o\u0027rta hadlari ko\u0027paytmasiga teng.",
+               "trap":  "Proporsiyani \"nakrest\" (X shaklida) ko\u0027paytirib yechish — chetki hadlarni bir tomonga, o\u0027rta hadlarni ikkinchi tomonga ko\u0027paytiring, keyin tenglamani yeching.",
+               "practical":  "x : 12 = 3 3/4 : 7 1/8 proporsiyadan x ni toping."
+           },
+    "19":  {
+               "sourceTitle":  "🎯 62–64. Proporsiya asosiy xossasining tatbiqlari",
+               "essence":  "Abu Rayhon Beruniyning mashhur \"besh miqdor qoidasi\": agar 10 dirham 2 oyda 5 dirham foyda keltirsa, 8 dirham 3 oyda qancha foyda keltiradi?",
+               "trap":  "Abu Rayhon Beruniyning mashhur \"besh miqdor qoidasi\": agar 10 dirham 2 oyda 5 dirham foyda keltirsa, 8 dirham 3 oyda qancha foyda keltiradi?",
+               "practical":  "Abu Rayhon Beruniyning mashhur \"besh miqdor qoidasi\": agar 10 dirham 2 oyda 5 dirham foyda keltirsa, 8 dirham 3 oyda qancha foyda keltiradi?"
+           },
+    "20":  {
+               "sourceTitle":  "↔️ 65–66. To\u0027g\u0027ri va teskari proporsional miqdorlar",
+               "essence":  "To\u0027g\u0027ri proporsional: ikkalasi BIRGA o\u0027sadi yoki kamayadi (masalan, tezlik bir xil bo\u0027lsa, vaqt ↑ → yo\u0027l ↑). Teskari proporsional: biri o\u0027sganda ikkinchisi kamayadi (masalan, ishchi ↑ → vaqt ↓).",
+               "trap":  "To\u0027g\u0027ri proporsional: ikkalasi BIRGA o\u0027sadi yoki kamayadi (masalan, tezlik bir xil bo\u0027lsa, vaqt ↑ → yo\u0027l ↑). Teskari proporsional: biri o\u0027sganda ikkinchisi kamayadi (masalan, ishchi ↑ → vaqt ↓).",
+               "practical":  "Mashina 1 soatda 70 km yursa, 3 soatda qancha yo\u0027l bosadi?"
+           },
+    "21":  {
+               "sourceTitle":  "🧮 69–74. To\u0027g\u0027ri va teskari proporsional miqdorlarning tatbig\u0027i",
+               "essence":  "📌 Sonni berilgan sonlarga to\u0027g\u0027ri proporsional qilib bo\u0027lish uchun: nisbat yig\u0027indisini topib, koeffitsiyentni aniqlash, so\u0027ng har bir qismni koeffitsiyentga ko\u0027paytirish kerak.",
+               "trap":  "📌 Sonni berilgan sonlarga to\u0027g\u0027ri proporsional qilib bo\u0027lish uchun: nisbat yig\u0027indisini topib, koeffitsiyentni aniqlash, so\u0027ng har bir qismni koeffitsiyentga ko\u0027paytirish kerak.",
+               "practical":  "100 sonini 2 va 3 sonlariga to\u0027g\u0027ri proporsional qilib bo\u0027ling."
+           },
+    "22":  {
+               "sourceTitle":  "🗺️ 75–78. Masshtab",
+               "essence":  "📌 Masshtab — chizmadagi o\u0027lchamning haqiqiy o\u0027lchamga nisbati. U chizmadagi o\u0027lcham haqiqiy o\u0027lchamdan necha marta kichik (yoki katta) ekanini ko\u0027rsatadi.",
+               "trap":  "Kichik jonzot yoki narsalarni chizishda (masalan, hasharotlar) masshtab 5:1, 10:1 kabi — chizmadagi o\u0027lcham HAQIQIYDAN KATTA bo\u0027ladi. Bunday holda: haqiqiy o\u0027lcham = chizmadagi o\u0027lcham : masshtab koeffitsiyenti.",
+               "practical":  "Masshtabi 1:400 bo\u0027lgan chizmada sport maydonining bo\u0027yi 50 sm. Haqiqiy bo\u0027yi qancha?"
+           },
+    "23":  {
+               "sourceTitle":  "📏 84–85. Koordinata to\u0027g\u0027ri chizig\u0027i",
+               "essence":  "📌 Sanoq boshi, yo\u0027nalish va birlik kesma bilan birga tanlangan to\u0027g\u0027ri chiziq koordinata to\u0027g\u0027ri chizig\u0027i deyiladi.",
+               "trap":  "📌 Sanoq boshi, yo\u0027nalish va birlik kesma bilan birga tanlangan to\u0027g\u0027ri chiziq koordinata to\u0027g\u0027ri chizig\u0027i deyiladi.",
+               "practical":  "Koordinatasi −3 bo\u0027lgan nuqtani toping."
+           },
+    "24":  {
+               "sourceTitle":  "🪞 86–88. Qarama-qarshi sonlar. Sonning moduli",
+               "essence":  "Modul — bu \u0027masofa\u0027, shuning uchun u HECH QACHON manfiy bo\u0027lmaydi! |0| = 0.",
+               "trap":  "Modul — bu \u0027masofa\u0027, shuning uchun u HECH QACHON manfiy bo\u0027lmaydi! |0| = 0.",
+               "practical":  "|−8| va |5| ni toping."
+           },
+    "25":  {
+               "sourceTitle":  "📊 89–90. Sonlarni taqqoslash. Miqdorlarning o\u0027zgarishi",
+               "essence":  "📌 Koordinata to\u0027g\u0027ri chizig\u0027ida o\u0027ngda joylashgan son — katta, chapda joylashgan — kichik.",
+               "trap":  "Manfiy sonlarni taqqoslashda: modullarini taqqoslang, keyin natijani TESKARISIGA o\u0027qing — moduli kattasi haqiqatda kichik son!",
+               "practical":  "−13 va −15 ni taqqoslang."
+           },
+    "26":  {
+               "sourceTitle":  "🌑 95–97. Manfiy sonlarni qo\u0027shish",
+               "essence":  "📌 Ikkita manfiy sonni qo\u0027shish uchun: 1) modullarini qo\u0027shish; 2) natija oldiga MINUS ishorasini qo\u0027yish.",
+               "trap":  "📌 Ikkita manfiy sonni qo\u0027shish uchun: 1) modullarini qo\u0027shish; 2) natija oldiga MINUS ishorasini qo\u0027yish.",
+               "practical":  "−12 + (−8) ni hisoblang."
+           },
+    "27":  {
+               "sourceTitle":  "⚡ 98–100. Har xil ishorali sonlarni qo\u0027shish",
+               "essence":  "📌 Har xil ishorali (biri musbat, biri manfiy) va modullari teng bo\u0027lmagan ikkita sonni qo\u0027shish uchun: 1) moduli kattasidan moduli kichigini AYIRISH; 2) natija oldiga moduli katta qo\u0027shiluvchining ishorasini qo\u0027yish.",
+               "trap":  "📌 Har xil ishorali (biri musbat, biri manfiy) va modullari teng bo\u0027lmagan ikkita sonni qo\u0027shish uchun: 1) moduli kattasidan moduli kichigini AYIRISH; 2) natija oldiga moduli katta qo\u0027shiluvchining ishorasini qo\u0027yish.",
+               "practical":  "(+2) + (−5) ni hisoblang."
+           },
+    "28":  {
+               "sourceTitle":  "➖ 101–102. Sonlarni ayirish",
+               "essence":  "📌 Bir sondan ikkinchisini ayirish uchun kamayuvchiga ayriluvchiga QARAMA-QARSHI sonni qo\u0027shish kerak: k − n = k + (−n).",
+               "trap":  "📌 Bir sondan ikkinchisini ayirish uchun kamayuvchiga ayriluvchiga QARAMA-QARSHI sonni qo\u0027shish kerak: k − n = k + (−n).",
+               "practical":  "−2 − (−3) ni hisoblang."
+           },
+    "29":  {
+               "sourceTitle":  "➗ 107–109. Sonlarni bo\u0027lish",
+               "essence":  "📌 Bo\u0027lishning ishora qoidasi ko\u0027paytirishnikiga o\u0027xshaydi: bir xil ishorali sonlarni bo\u0027lganda natija MUSBAT, har xil ishorali sonlarni bo\u0027lganda natija MANFIY bo\u0027ladi.",
+               "trap":  "📌 Bo\u0027lishning ishora qoidasi ko\u0027paytirishnikiga o\u0027xshaydi: bir xil ishorali sonlarni bo\u0027lganda natija MUSBAT, har xil ishorali sonlarni bo\u0027lganda natija MANFIY bo\u0027ladi.",
+               "practical":  "−28 : (−4) va 28 : (−4) ni hisoblang."
+           },
+    "30":  {
+               "sourceTitle":  "🔢 110–112. Ratsional sonlar haqida tushuncha",
+               "essence":  "📌 k/n kasr ko\u0027rinishida yozilishi mumkin bo\u0027lgan sonlar (bunda k — butun son, n — natural son) ratsional sonlar deyiladi.",
+               "trap":  "📌 k/n kasr ko\u0027rinishida yozilishi mumkin bo\u0027lgan sonlar (bunda k — butun son, n — natural son) ratsional sonlar deyiladi.",
+               "practical":  "📌 k/n kasr ko\u0027rinishida yozilishi mumkin bo\u0027lgan sonlar (bunda k — butun son, n — natural son) ratsional sonlar deyiladi."
+           },
+    "31":  {
+               "sourceTitle":  "🧮 113. Sonlarning darajalari, kvadrat ildizlar, davriy kasr",
+               "essence":  "Sof davriy kasrni oddiy kasrga aylantirish uchun: davrdagi sonni suratga, davrda nechta raqam bo\u0027lsa shuncha 9 dan iborat sonni maxrajga yozing. Masalan, 0,(6) = 6/9 = 2/3.",
+               "trap":  "Sof davriy kasrni oddiy kasrga aylantirish uchun: davrdagi sonni suratga, davrda nechta raqam bo\u0027lsa shuncha 9 dan iborat sonni maxrajga yozing. Masalan, 0,(6) = 6/9 = 2/3.",
+               "practical":  "(−2)⁴ va (−2)³ ni hisoblang."
+           },
+    "32":  {
+               "sourceTitle":  "⚙️ 118–119. Bir noma\u0027lumli butun koeffitsiyentli chiziqli tenglamalarni yechish",
+               "essence":  "Agar tenglama 0·x = 0 ko\u0027rinishiga kelsa — tenglama CHEKSIZ KO\u0027P yechimga ega. Agar 0·x = (noldan farqli son) bo\u0027lsa — tenglamaning ILDIZI YO\u0027Q.",
+               "trap":  "Agar tenglama 0·x = 0 ko\u0027rinishiga kelsa — tenglama CHEKSIZ KO\u0027P yechimga ega. Agar 0·x = (noldan farqli son) bo\u0027lsa — tenglamaning ILDIZI YO\u0027Q.",
+               "practical":  "3x + 2 = 4(x + 1) − x tenglamani yeching."
+           },
+    "33":  {
+               "sourceTitle":  "📈 126–127. Diagrammalar",
+               "essence":  "Diagramma — sonlarni \u0027ko\u0027rish\u0027 uchun vosita. Katta-kichikni solishtirish diagrammada tez va oson bo\u0027ladi.",
+               "trap":  "Diagramma — sonlarni \u0027ko\u0027rish\u0027 uchun vosita. Katta-kichikni solishtirish diagrammada tez va oson bo\u0027ladi.",
+               "practical":  "📌 Diagrammalar uch xil bo\u0027ladi: doiraviy, chiziqli va ustunli."
+           },
+    "34":  {
+               "sourceTitle":  "📐 128–129. Ma\u0027lumotlar tahlili",
+               "essence":  "📌 O\u0027rta arifmetik qiymat — barcha sonlarning yig\u0027indisini ularning soniga bo\u0027lish natijasi.",
+               "trap":  "O\u0027rta arifmetik, moda va mediana — uchalasi ham \u0027o\u0027rtacha\u0027ni ifodalaydi, lekin har xil yo\u0027l bilan. Moda — \u0027eng ko\u0027p uchraganini\u0027, mediana — \u0027aynan o\u0027rtada turganini\u0027 ko\u0027rsatadi.",
+               "practical":  "3°C, 4°C, 5°C, 8°C, 6°C, 4°C, 7°C haftalik temperaturaning medianasini toping."
+           },
+    "35":  {
+               "sourceTitle":  "🎲 130–133. Kombinatorika elementlari va qoidalari",
+               "essence":  "\u0027YOKI\u0027 so\u0027zi — QO\u0027SHISH qoidasini, \u0027VA keyin\u0027 (ketma-ketlik) — KO\u0027PAYTIRISH qoidasini bildiradi.",
+               "trap":  "\u0027YOKI\u0027 so\u0027zi — QO\u0027SHISH qoidasini, \u0027VA keyin\u0027 (ketma-ketlik) — KO\u0027PAYTIRISH qoidasini bildiradi.",
+               "practical":  "Bulungurdan Samarqandga 2 xil, Samarqanddan Toshkentga 4 xil yo\u0027l bor. Bulungurdan Samarqand orqali Toshkentga necha xil yo\u0027l bilan borish mumkin?"
+           },
+    "36":  {
+               "sourceTitle":  "🎲 130–133. Kombinatorika elementlari va qoidalari",
+               "essence":  "\u0027YOKI\u0027 so\u0027zi — QO\u0027SHISH qoidasini, \u0027VA keyin\u0027 (ketma-ketlik) — KO\u0027PAYTIRISH qoidasini bildiradi.",
+               "trap":  "\u0027YOKI\u0027 so\u0027zi — QO\u0027SHISH qoidasini, \u0027VA keyin\u0027 (ketma-ketlik) — KO\u0027PAYTIRISH qoidasini bildiradi.",
+               "practical":  "Bulungurdan Samarqandga 2 xil, Samarqanddan Toshkentga 4 xil yo\u0027l bor. Bulungurdan Samarqand orqali Toshkentga necha xil yo\u0027l bilan borish mumkin?"
+           },
+    "37":  {
+               "sourceTitle":  "📏 139–142. Uchburchakning yuzi",
+               "essence":  "📌 Har qanday uchburchakning yuzi uning asosi va balandligi ko\u0027paytmasining yarmiga teng: S = (1/2)·a·h.",
+               "trap":  "📌 Har qanday uchburchakning yuzi uning asosi va balandligi ko\u0027paytmasining yarmiga teng: S = (1/2)·a·h.",
+               "practical":  "To\u0027g\u0027ri burchakli uchburchakning katetlari 6 sm va 8 sm. Yuzini toping."
+           },
+    "38":  {
+               "sourceTitle":  "🔲 145–148. Katakli qog\u0027ozda yuzlarni hisoblash",
+               "essence":  "📌 Pik formulasi: S = M/2 + N − 1, bunda M — ko\u0027pburchak chegarasidagi tugun nuqtalar soni, N — ko\u0027pburchak ICHIDAGI tugun nuqtalar soni.",
+               "trap":  "Pik formulasi — noodatiy shakldagi (qiyshiq tomonli) ko\u0027pburchaklar yuzini hisoblashda juda qulay, chunki faqat tugun nuqtalarni sanash kifoya.",
+               "practical":  "To\u0027g\u0027ri to\u0027rtburchakning asosi 5 sm, balandligi 4 sm. Pik formulasi bilan yuzini tekshiring."
+           },
+    "39":  {
+               "sourceTitle":  "🔲 145–148. Katakli qog\u0027ozda yuzlarni hisoblash",
+               "essence":  "📌 Pik formulasi: S = M/2 + N − 1, bunda M — ko\u0027pburchak chegarasidagi tugun nuqtalar soni, N — ko\u0027pburchak ICHIDAGI tugun nuqtalar soni.",
+               "trap":  "Pik formulasi — noodatiy shakldagi (qiyshiq tomonli) ko\u0027pburchaklar yuzini hisoblashda juda qulay, chunki faqat tugun nuqtalarni sanash kifoya.",
+               "practical":  "To\u0027g\u0027ri to\u0027rtburchakning asosi 5 sm, balandligi 4 sm. Pik formulasi bilan yuzini tekshiring."
+           },
+    "40":  {
+               "sourceTitle":  "⭕ 150–152. Aylana uzunligi va doira yuzi",
+               "essence":  "π — o\u0027zgarmas son, u aylananing kattaligiga bog\u0027liq emas! Har doim taxminan 3,14 (yoki 22/7).",
+               "trap":  "π — o\u0027zgarmas son, u aylananing kattaligiga bog\u0027liq emas! Har doim taxminan 3,14 (yoki 22/7).",
+               "practical":  "Radiusi 3 sm bo\u0027lgan aylananing uzunligini toping."
+           },
+    "41":  {
+               "sourceTitle":  "➕➖ 31–33. Har xil maxrajli kasrlarni qo\u0027shish va ayirish",
+               "essence":  "Agar natija qisqaradigan kasr bo\u0027lsa — uni albatta qisqartiring! Agar noto\u0027g\u0027ri kasr chiqsa — undan butun qismini ajrating.",
+               "trap":  "Agar natija qisqaradigan kasr bo\u0027lsa — uni albatta qisqartiring! Agar noto\u0027g\u0027ri kasr chiqsa — undan butun qismini ajrating.",
+               "practical":  "3/4 + 1/10 yig\u0027indini toping."
+           },
+    "42":  {
+               "sourceTitle":  "➗ 51–53. Oddiy kasrlarni bo\u0027lish",
+               "essence":  "📌 Kasrni kasrga bo\u0027lish uchun birinchi kasrni ikkinchi kasrga teskari son bilan ko\u0027paytirish kerak: k/n : p/q = k/n · q/p.",
+               "trap":  "\"Bo\u0027lishni ko\u0027paytirishga aylantirish\" — bo\u0027luvchini teskarisiga aylantirib, amalni bo\u0027lishdan ko\u0027paytirishga o\u0027zgartirish, xolos!",
+               "practical":  "6/7 : 9/10 ni hisoblang."
+           },
+    "43":  {
+               "sourceTitle":  "✖️ 59–61. Proporsiyaning asosiy xossasi",
+               "essence":  "📌 a/b = c/d proporsiya uchun a·d = b·c tenglik o\u0027rinli — proporsiyaning chetki hadlari ko\u0027paytmasi o\u0027rta hadlari ko\u0027paytmasiga teng.",
+               "trap":  "Proporsiyani \"nakrest\" (X shaklida) ko\u0027paytirib yechish — chetki hadlarni bir tomonga, o\u0027rta hadlarni ikkinchi tomonga ko\u0027paytiring, keyin tenglamani yeching.",
+               "practical":  "x : 12 = 3 3/4 : 7 1/8 proporsiyadan x ni toping."
+           },
+    "44":  {
+               "sourceTitle":  "🌑 95–97. Manfiy sonlarni qo\u0027shish",
+               "essence":  "📌 Ikkita manfiy sonni qo\u0027shish uchun: 1) modullarini qo\u0027shish; 2) natija oldiga MINUS ishorasini qo\u0027yish.",
+               "trap":  "📌 Ikkita manfiy sonni qo\u0027shish uchun: 1) modullarini qo\u0027shish; 2) natija oldiga MINUS ishorasini qo\u0027yish.",
+               "practical":  "−12 + (−8) ni hisoblang."
+           },
+    "45":  {
+               "sourceTitle":  "🔀 105–106. Sonlarni ko\u0027paytirish",
+               "essence":  "\u0027Do\u0027st do\u0027stiga do\u0027st, do\u0027st dushmanga dushman\u0027: (+)·(+)=+; (−)·(−)=+; (+)·(−)=−; (−)·(+)=−.",
+               "trap":  "\u0027Do\u0027st do\u0027stiga do\u0027st, do\u0027st dushmanga dushman\u0027: (+)·(+)=+; (−)·(−)=+; (+)·(−)=−; (−)·(+)=−.",
+               "practical":  "(−8) · (−5) va (−8) · 5 ni hisoblang."
+           },
+    "46":  {
+               "sourceTitle":  "⚙️ 118–119. Bir noma\u0027lumli butun koeffitsiyentli chiziqli tenglamalarni yechish",
+               "essence":  "Agar tenglama 0·x = 0 ko\u0027rinishiga kelsa — tenglama CHEKSIZ KO\u0027P yechimga ega. Agar 0·x = (noldan farqli son) bo\u0027lsa — tenglamaning ILDIZI YO\u0027Q.",
+               "trap":  "Agar tenglama 0·x = 0 ko\u0027rinishiga kelsa — tenglama CHEKSIZ KO\u0027P yechimga ega. Agar 0·x = (noldan farqli son) bo\u0027lsa — tenglamaning ILDIZI YO\u0027Q.",
+               "practical":  "3x + 2 = 4(x + 1) − x tenglamani yeching."
+           },
+    "47":  {
+               "sourceTitle":  "📐 128–129. Ma\u0027lumotlar tahlili",
+               "essence":  "📌 O\u0027rta arifmetik qiymat — barcha sonlarning yig\u0027indisini ularning soniga bo\u0027lish natijasi.",
+               "trap":  "O\u0027rta arifmetik, moda va mediana — uchalasi ham \u0027o\u0027rtacha\u0027ni ifodalaydi, lekin har xil yo\u0027l bilan. Moda — \u0027eng ko\u0027p uchraganini\u0027, mediana — \u0027aynan o\u0027rtada turganini\u0027 ko\u0027rsatadi.",
+               "practical":  "3°C, 4°C, 5°C, 8°C, 6°C, 4°C, 7°C haftalik temperaturaning medianasini toping."
+           },
+    "48":  {
+               "sourceTitle":  "📏 139–142. Uchburchakning yuzi",
+               "essence":  "📌 Har qanday uchburchakning yuzi uning asosi va balandligi ko\u0027paytmasining yarmiga teng: S = (1/2)·a·h.",
+               "trap":  "📌 Har qanday uchburchakning yuzi uning asosi va balandligi ko\u0027paytmasining yarmiga teng: S = (1/2)·a·h.",
+               "practical":  "To\u0027g\u0027ri burchakli uchburchakning katetlari 6 sm va 8 sm. Yuzini toping."
+           }
+}
