@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Trophy as Award, Download, Flag, Play, RefreshCcw, RotateCcw, XCircle } from '../components/AppIcons'
+import { Download, Flag, Play, RefreshCcw, RotateCcw, XCircle } from '../components/AppIcons'
+import { BrandLogo as Award } from '../components/BrandLogo'
 import { useAcademyStore } from '../store/academyStore'
 
 const questions = Array.from({ length: 40 }, (_, index) => ({
@@ -92,7 +93,7 @@ export function MockTestPage() {
 
   const submitTest = () => {
     const errors = questions.filter((question) => answers[question.id] !== question.answer)
-    const result = { id: Date.now(), score: results.correct, level: results.level, date: new Date().toLocaleDateString('uz-UZ'), errors }
+    const result = { id: Date.now(), score: results.correct, total: questions.length, level: results.level, date: new Date().toLocaleDateString('uz-UZ'), errors }
     setSubmitted(true)
     setScore(results.correct)
     saveTest(result)

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Sidebar } from './components/Sidebar'
 import { PageHeader } from './components/PageHeader'
@@ -8,11 +8,11 @@ import { SubjectsPage } from './pages/SubjectsPage'
 import { FlashcardsPage } from './pages/FlashcardsPage'
 import { TestsPage } from './pages/TestsPage'
 import { TestDetailPage } from './pages/TestDetailPage'
-import { KnowledgePage } from './pages/KnowledgePage'
 import { TutorPage } from './pages/TutorPage'
 import { ProfilePage } from './pages/ProfilePage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { ResultsPage } from './pages/ResultsPage'
+import { LeaderboardPage } from './pages/LeaderboardPage'
 import i18n from './i18n'
 import { useThemeStore } from './store/themeStore'
 import { useUserStore } from './store/useUserStore'
@@ -70,10 +70,11 @@ function App() {
                   <Route path="/flashcards" element={<FlashcardsPage />} />
                   <Route path="/tests" element={<TestsPage />} />
                   <Route path="/tests/:id" element={<TestDetailPage />} />
-                  <Route path="/knowledge" element={<KnowledgePage />} />
+                  <Route path="/knowledge" element={<Navigate to="/results" replace />} />
                   <Route path="/tutor" element={<TutorPage />} />
                   <Route path="/profile" element={<ProfilePage />} />
                   <Route path="/results" element={<ResultsPage />} />
+                  <Route path="/leaderboard" element={<LeaderboardPage />} />
                   <Route path="/login" element={<HomePage />} />
                   <Route path="/analytics" element={<ProfilePage />} />
                   <Route path="*" element={<NotFoundPage />} />
