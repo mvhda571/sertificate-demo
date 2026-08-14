@@ -26,6 +26,7 @@ import { UzbekGradesPage } from './pages/UzbekGradesPage'
 import { UzbekGradePage } from './pages/UzbekGradePage'
 import { LiteratureGradesPage } from './pages/LiteratureGradesPage'
 import { LiteratureGradePage } from './pages/LiteratureGradePage'
+import { MilestoneController } from './components/MilestoneController'
 
 function App() {
   const { darkMode, language } = useThemeStore()
@@ -81,6 +82,7 @@ function App() {
                 </Routes>
               </motion.div>
             </AnimatePresence>
+            <MilestoneController />
           </main>
         </div>
       </div>
