@@ -6,7 +6,6 @@ import { PageHeader } from './components/PageHeader'
 import { HomePage } from './pages/HomePage'
 import { SubjectsPage } from './pages/SubjectsPage'
 import { FlashcardsPage } from './pages/FlashcardsPage'
-import { TestsPage } from './pages/TestsPage'
 import { TestDetailPage } from './pages/TestDetailPage'
 import { TutorPage } from './pages/TutorPage'
 import { ProfilePage } from './pages/ProfilePage'
@@ -31,22 +30,24 @@ import { MilestoneController } from './components/MilestoneController'
 function App() {
   const { darkMode, language } = useThemeStore()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [examFullscreen, setExamFullscreen] = useState(Boolean(document.fullscreenElement))
   const isAuthenticated = useUserStore((state) => state.isAuthenticated)
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', darkMode)
   }, [darkMode])
   useEffect(() => { i18n.changeLanguage(language) }, [language])
+  useEffect(() => { const syncFullscreen = () => setExamFullscreen(Boolean(document.fullscreenElement)); document.addEventListener('fullscreenchange', syncFullscreen); return () => document.removeEventListener('fullscreenchange', syncFullscreen) }, [])
 
   return (
     <BrowserRouter>
       {!isAuthenticated && <AuthGate />}
       <div className="min-h-screen bg-[#F8FAFC] text-slate-950 transition-colors dark:bg-slate-950 dark:text-slate-100">
-        <div className="mx-auto flex min-h-screen max-w-[1600px] gap-6 p-3 sm:p-5 lg:p-8">
-          <Sidebar open={menuOpen} onClose={() => setMenuOpen(false)} />
+        <div className={`mx-auto flex min-h-screen max-w-[1600px] ${examFullscreen ? 'p-0' : 'gap-6 p-3 sm:p-5 lg:p-8'}`}>
+          {!examFullscreen && <Sidebar open={menuOpen} onClose={() => setMenuOpen(false)} />}
 
           <main className="min-w-0 flex-1">
-            <PageHeader onMenu={() => setMenuOpen(true)} />
+            {!examFullscreen && <PageHeader onMenu={() => setMenuOpen(true)} />}
 
             <AnimatePresence mode="wait">
               <motion.div
@@ -69,7 +70,8 @@ function App() {
                   <Route path="/subjects/:subjectId" element={<LessonPage />} />
                   <Route path="/subjects/:subjectId/mock" element={<MockTestPage />} />
                   <Route path="/flashcards" element={<FlashcardsPage />} />
-                  <Route path="/tests" element={<TestsPage />} />
+                  <Route path="/tests" element={<MockTestPage />} />
+                  <Route path="/tests/mock" element={<MockTestPage />} />
                   <Route path="/tests/:id" element={<TestDetailPage />} />
                   <Route path="/knowledge" element={<Navigate to="/results" replace />} />
                   <Route path="/tutor" element={<TutorPage />} />

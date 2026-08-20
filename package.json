@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "scrape:math": "node scripts/scrape-test-uz-math.mjs --pages=3",
+    "api:mock": "node server/mock-test-api.mjs"
   },
   "dependencies": {
     "framer-motion": "^13.1.0",

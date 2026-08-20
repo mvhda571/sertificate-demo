@@ -1,235 +1,80 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Download, Flag, Play, RefreshCcw, RotateCcw, XCircle } from '../components/AppIcons'
-import { BrandLogo as Award } from '../components/BrandLogo'
-import { useAcademyStore } from '../store/academyStore'
+import { Flag, Play, RefreshCcw } from '../components/AppIcons'
+import { useTestStore } from '../store/useTestStore'
+import mathMockData from '../data/mathMockQuestions.json'
+import { Link } from 'react-router-dom'
+import { examSubjects } from '../utils/examGenerator'
+import { ExamProctorModals, useExamProctor } from '../hooks/useExamProctor'
 
-const questions = Array.from({ length: 40 }, (_, index) => ({
-  id: index + 1,
-  text: `Savol ${index + 1}: Bu mavzu bo'yicha eng muhim tushunchani aniqlang.`,
-  options: ['Variant A', 'Variant B', 'Variant C', 'Variant D'],
-  answer: index % 4,
-  topic: ['Ona tili', 'Matematika', 'Tarix', 'Umumiy'][index % 4],
-}))
-
-const scoreLevel = (score) => {
-  if (score >= 34) return 'A'
-  if (score >= 28) return 'B+'
-  if (score >= 22) return 'B'
-  return 'C'
-}
-
-const feedbackForTopics = (wrongTopics) => {
-  if (!wrongTopics.length) return 'Sizning bilimlaringiz mustahkam. Tayyorlanish darajangiz yuqori.'
-  return `Kuchsiz yo'nalishlar: ${[...new Set(wrongTopics)].join(', ')}. Ushbu mavzularni chuqurroq qayta ko'rib chiqing.`
+const DURATION = 90 * 60
+const verifiedQuestions = mathMockData.filter(question => !question.isSourceError && Number.isInteger(question.correctOption))
+const availableVariants = [...new Set(mathMockData.map(question => question.variantId))]
+const certificateLevel = percent => {
+  if (percent >= 86) return { grade: percent >= 93 ? 'A+' : 'A', label: 'Maksimal natija', tone: 'from-emerald-500 to-teal-600' }
+  if (percent >= 70) return { grade: percent >= 78 ? 'B+' : 'B', label: 'Yaxshi natija', tone: 'from-blue-500 to-indigo-600' }
+  if (percent >= 55) return { grade: percent >= 62 ? 'C+' : 'C', label: 'Qoniqarli natija', tone: 'from-amber-400 to-orange-500' }
+  return { grade: 'O‘tmadi', label: 'Sertifikat berilmaydi', tone: 'from-red-500 to-rose-700' }
 }
 
 export function MockTestPage() {
-  const [current, setCurrent] = useState(1)
+  const [current, setCurrent] = useState(0)
   const [answers, setAnswers] = useState({})
   const [flags, setFlags] = useState({})
-  const [remaining, setRemaining] = useState(30 * 60)
+  const [remaining, setRemaining] = useState(DURATION)
   const [submitted, setSubmitted] = useState(false)
-  const [score, setScore] = useState(0)
-  const [tab, setTab] = useState('exam')
-  const [studentName, setStudentName] = useState('Muslima')
-  const { errorBank, saveTest } = useAcademyStore()
+  const [view, setView] = useState('catalog')
+  const [selectedVariant, setSelectedVariant] = useState(availableVariants[0] || null)
+  const proctor = useExamProctor(() => { setSubmitted(false); setView('catalog'); setAnswers({}); setFlags({}); setRemaining(DURATION) })
+  const completeTest = useTestStore(state => state.completeTest)
+  const questions = useMemo(() => verifiedQuestions.filter(question => question.variantId === selectedVariant).map((question, index) => ({ ...question, number: index + 1 })), [selectedVariant])
+  const active = questions[current]
+
+  const result = useMemo(() => {
+    const details = questions.map(question => ({ ...question, selectedOption: answers[question.id], correct: answers[question.id] === question.correctOption }))
+    const correct = details.filter(item => item.correct).length
+    return { details, correct, wrong: questions.length - correct, percent: Math.round(correct / questions.length * 100) }
+  }, [answers, questions])
+
+  const submit = () => {
+    if (submitted) return
+    setSubmitted(true)
+    void proctor.finishExam()
+    completeTest({ id: Date.now(), testId: `math-uzbmb-${selectedVariant}`, variantId: selectedVariant, type: 'mock', title: `Matematika UZBMB ${selectedVariant}`, score: result.correct, total: questions.length, percent: result.percent, certificateLevel: certificateLevel(result.percent).grade, errors: result.details.filter(item => !item.correct).map(item => ({ ...item, front: item.question, back: item.options[item.correctOption] })) })
+  }
 
   useEffect(() => {
-    if (submitted) return undefined
-    const timer = setInterval(() => {
-      setRemaining((seconds) => {
-        if (seconds <= 1) {
-          clearInterval(timer)
-          setSubmitted(true)
-          return 0
-        }
-        return seconds - 1
-      })
-    }, 1000)
-    return () => clearInterval(timer)
-  }, [submitted])
+    if (submitted || view !== 'exam') return undefined
+    const timer = window.setInterval(() => setRemaining(value => {
+      if (value <= 1) { window.clearInterval(timer); window.queueMicrotask(() => setSubmitted(true)); return 0 }
+      return value - 1
+    }), 1000)
+    return () => window.clearInterval(timer)
+  }, [submitted, view])
 
-  const currentQuestion = questions.find((q) => q.id === current)
+  const reset = () => { setCurrent(0); setAnswers({}); setFlags({}); setRemaining(DURATION); setSubmitted(false) }
+  const time = `${String(Math.floor(remaining / 60)).padStart(2, '0')}:${String(remaining % 60).padStart(2, '0')}`
+  const certificate = certificateLevel(result.percent)
 
-  const answeredCount = Object.keys(answers).length
-  const questionButtons = questions.map((question) => {
-    const isAnswered = question.id in answers
-    const isFlagged = Boolean(flags[question.id])
-    return (
-      <button
-        key={question.id}
-        type="button"
-        className={`rounded-2xl border px-3 py-2 text-sm font-semibold transition ${
-          isAnswered
-            ? 'bg-emerald-600 text-white'
-            : isFlagged
-            ? 'bg-yellow-300 text-slate-900'
-            : 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200'
-        }`}
-        onClick={() => setCurrent(question.id)}
-      >
-        {question.id}
-      </button>
-    )
-  })
+  if (view === 'catalog') return <div className="space-y-6"><section className="hero-panel"><p className="eyebrow">Mock imtihonlar</p><h1 className="page-title">Test turini tanlang</h1><p className="mt-3 text-sm text-slate-500">Platforma testlari yoki 2025-yil DTM / UZBMB variantlari bo‘yicha bilimlaringizni sinang.</p></section><div className="grid gap-5 md:grid-cols-2"><button onClick={() => setView('platform-subjects')} className="card-panel p-7 text-left transition hover:-translate-y-1 hover:border-emerald-400"><p className="eyebrow">Platforma</p><h2 className="mt-3 text-2xl font-black">Website-ning o‘zidan Mock Exam</h2><p className="mt-2 text-sm text-slate-500">4 ta fan bo‘yicha standart platforma testlari.</p></button><button onClick={() => setView('subjects')} className="card-panel p-7 text-left transition hover:-translate-y-1 hover:border-blue-400"><p className="eyebrow text-blue-600">2025</p><h2 className="mt-3 text-2xl font-black">DTM / UZBMB variantlari Mock Exam</h2><p className="mt-2 text-sm text-slate-500">Yuklangan variantlar bo‘yicha fan tanlang.</p></button></div></div>
 
-  const minutes = String(Math.floor(remaining / 60)).padStart(2, '0')
-  const seconds = String(remaining % 60).padStart(2, '0')
+  if (view === 'platform-subjects') return <div className="space-y-6"><button onClick={() => setView('catalog')} className="btn-secondary">← Orqaga</button><section className="hero-panel"><p className="eyebrow">Platforma Mock Exam</p><h1 className="page-title">Fanni tanlang</h1><p className="mt-3 text-sm text-slate-500">Har bir testda 20 ta aralashtirilgan savol mavjud.</p></section><div className="grid gap-5 sm:grid-cols-2">{examSubjects.map(subject => <Link key={subject.id} to={`/tests/${subject.id}`} className="card-panel p-6 transition hover:-translate-y-1 hover:border-emerald-400"><h2 className="text-xl font-black">{subject.title}</h2><p className="mt-2 text-sm text-slate-500">20 savol · Platforma testi</p><span className="btn-primary mt-5">Testni ochish</span></Link>)}</div></div>
 
-  const handleAnswer = (optionIndex) => {
-    if (submitted) return
-    setAnswers((prev) => ({ ...prev, [current]: optionIndex }))
-  }
+  if (view === 'subjects') return <div className="space-y-6"><button onClick={() => setView('catalog')} className="btn-secondary">← Orqaga</button><section className="hero-panel"><p className="eyebrow">2025-yil DTM / UZBMB</p><h1 className="page-title">Fanni tanlang</h1></section><div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"><button onClick={() => setView('variants')} className="card-panel border-blue-200 p-6 text-left hover:border-blue-500"><b className="text-xl">Matematika</b><p className="mt-2 text-sm text-emerald-600">Faol · {availableVariants.length} ta variant</p></button>{['Fizika','Ona tili va adabiyot','Ingliz tili','Tarix','Biologiya'].map(subject => <button key={subject} onClick={() => window.alert('Tez kunda...')} className="card-panel cursor-not-allowed bg-slate-100 p-6 text-left opacity-60 dark:bg-slate-900"><b>{subject}</b><p className="mt-2 text-sm">Tez kunda...</p></button>)}</div></div>
 
-  const handleToggleFlag = () => {
-    setFlags((prev) => ({ ...prev, [current]: !prev[current] }))
-  }
+  if (view === 'variants') return <div className="space-y-6"><ExamProctorModals proctor={proctor}/><button onClick={() => setView('subjects')} className="btn-secondary">← Fanlarga qaytish</button><section className="hero-panel"><p className="eyebrow text-blue-600">Matematika · 2025</p><h1 className="page-title">DTM / UZBMB variantini tanlang</h1><p className="mt-3 text-sm text-slate-500">Faqat matematik tekshiruvdan o‘tgan savollar imtihonga kiritiladi.</p></section>{availableVariants.length===0?<div role="status" className="card-panel p-8 text-center"><p className="font-bold">Variantlar yuklanmoqda...</p></div>:<div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">{availableVariants.map(variantId => { const validCount=verifiedQuestions.filter(question=>question.variantId===variantId).length; return <button key={variantId} onClick={() => proctor.askStart(() => { setSelectedVariant(variantId); setCurrent(0); setAnswers({}); setFlags({}); setRemaining(DURATION); setSubmitted(false); setView('exam') })} className="card-panel p-6 text-left transition hover:-translate-y-1 hover:border-blue-500"><span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-bold text-blue-700 dark:bg-blue-500/10 dark:text-blue-300">2025</span><h2 className="mt-4 text-2xl font-black">Variant {variantId} - {validCount} ta savol</h2><span className="btn-primary mt-5">Testni boshlash</span></button>})}</div>}</div>
 
-  const results = useMemo(() => {
-    const correct = questions.filter((question) => answers[question.id] === question.answer).length
-    const wrongTopics = questions.filter((question) => answers[question.id] !== undefined && answers[question.id] !== question.answer).map((question) => question.topic)
-    return { correct, level: scoreLevel(correct), wrongTopics }
-  }, [answers])
+  if (!questions.length) return <section className="card-panel p-10 text-center"><h1 className="text-2xl font-black">Savollar import qilinmagan</h1><p className="mt-2 text-slate-500">Avval matematika savollari JSON bazasini to‘ldiring.</p></section>
 
-  const submitTest = () => {
-    const errors = questions.filter((question) => answers[question.id] !== question.answer)
-    const result = { id: Date.now(), score: results.correct, total: questions.length, level: results.level, date: new Date().toLocaleDateString('uz-UZ'), errors }
-    setSubmitted(true)
-    setScore(results.correct)
-    saveTest(result)
-  }
+  return <div className="space-y-6">
+    <ExamProctorModals proctor={proctor}/>
+    {!submitted && <div className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-bold text-white">Savol ID: {active.id}</div>}
+    {submitted && <section className={`rounded-3xl bg-gradient-to-br ${certificate.tone} p-7 text-center text-white shadow-xl`}><p className="text-xs font-bold uppercase tracking-[.25em] opacity-80">Taxminiy sertifikat darajasi</p><b className="mt-3 block text-5xl">{certificate.grade}</b><p className="mt-2 font-semibold">{certificate.label} · {result.percent}%</p></section>}
+    <section className="hero-panel flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between"><div><p className="eyebrow">2025-yil DTM / UZBMB formati</p><h1 className="page-title">Matematika Mock Test</h1><p className="mt-3 text-sm text-slate-500">{questions.length} savol · 90 daqiqa · har bir savolda 4 ta variant</p></div><div className={`rounded-2xl px-6 py-4 text-center ${remaining < 600 ? 'bg-red-50 text-red-600 dark:bg-red-500/10' : 'bg-slate-100 dark:bg-slate-800'}`}><p className="text-xs font-bold uppercase tracking-wider">Qolgan vaqt</p><b className="mt-1 block text-3xl tabular-nums">{time}</b></div></section>
 
-  return (
-    <div className="space-y-8">
-      <section className="rounded-[32px] border border-white/10 bg-white/80 p-6 shadow-glow backdrop-blur-2xl dark:bg-slate-950/80 dark:border-white/10">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <div>
-            <span className="text-xs uppercase tracking-[0.35em] text-emerald-600">Sinov Testlari</span>
-            <h1 className="mt-4 text-3xl font-semibold text-slate-950 dark:text-white">National Certificate Simulator</h1>
-            <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-300">40 savol, real vaqt sinovi. Belgilangan javoblar va flaglar bilan mukammal tayyorlaning.</p>
-          </div>
-          <div className="rounded-[28px] bg-slate-100 p-4 text-center dark:bg-slate-900">
-            <p className="text-xs uppercase tracking-[0.35em] text-slate-500 dark:text-slate-400">Qolgan vaqt</p>
-            <p className="mt-2 text-3xl font-semibold text-slate-900 dark:text-white">{minutes}:{seconds}</p>
-          </div>
-        </div>
-      </section>
+    {submitted ? <section className="card-panel p-6 sm:p-8"><div className="grid gap-4 text-center sm:grid-cols-3"><Result label="To‘g‘ri" value={result.correct} color="text-emerald-600"/><Result label="Noto‘g‘ri / bo‘sh" value={result.wrong} color="text-red-500"/><Result label="Umumiy ball" value={`${result.percent}%`} color="text-blue-600"/></div><div className="mt-8 space-y-3">{result.details.map(item => <article key={item.id} className={`rounded-2xl border p-4 ${item.correct ? 'border-emerald-200 bg-emerald-50/50 dark:bg-emerald-500/5' : 'border-red-200 bg-red-50/50 dark:bg-red-500/5'}`}><p className="font-semibold">{item.number}. {item.question}</p><p className="mt-2 text-sm text-slate-500">Sizning javobingiz: {item.selectedOption == null ? 'Javob berilmagan' : item.options[item.selectedOption]}</p>{!item.correct && <p className="mt-1 text-sm font-semibold text-emerald-600">To‘g‘ri javob: {item.options[item.correctOption]}</p>}</article>)}</div><button onClick={reset} className="btn-primary mt-6"><RefreshCcw/> Qayta boshlash</button></section> : <section className="grid gap-6 xl:grid-cols-[1fr_340px]"><article className="card-panel p-6 sm:p-8"><div className="flex items-start justify-between gap-4"><div><p className="text-sm font-bold text-emerald-600">Savol {active.number} / {questions.length}</p><h2 className="mt-3 text-xl font-bold leading-8">{active.question}</h2>{active.questionImageUrl && <img src={active.questionImageUrl} alt="Savol chizmasi" className="mt-4 max-h-72 rounded-xl object-contain"/>}</div><button onClick={() => setFlags(value => ({...value,[active.id]:!value[active.id]}))} className={`icon-button shrink-0 ${flags[active.id] ? 'bg-amber-300 text-slate-900' : ''}`} aria-label="Savolni belgilash"><Flag/></button></div><div className="mt-7 grid gap-3">{active.options.map((option,index) => <button key={option} onClick={() => setAnswers(value => ({...value,[active.id]:index}))} className={`rounded-2xl border p-4 text-left transition ${answers[active.id] === index ? 'border-emerald-500 bg-emerald-50 text-emerald-900 dark:bg-emerald-500/10 dark:text-emerald-200' : 'border-slate-200 hover:border-emerald-300 dark:border-slate-700'}`}><b className="mr-3">{String.fromCharCode(65 + index)}.</b>{option}</button>)}</div><div className="mt-7 flex justify-between"><button disabled={current === 0} onClick={() => setCurrent(value => value - 1)} className="btn-secondary disabled:opacity-40">Oldingi</button><button disabled={current === questions.length - 1} onClick={() => setCurrent(value => value + 1)} className="btn-primary disabled:opacity-40">Keyingi</button></div></article><aside className="card-panel h-fit p-5"><h3 className="font-bold">Savollar palitrasi</h3><div className="mt-4 grid grid-cols-5 gap-2">{questions.map((question,index) => <button key={question.id} onClick={() => setCurrent(index)} className={`rounded-xl border py-2 text-sm font-bold ${current === index ? 'ring-2 ring-emerald-500' : ''} ${question.id in answers ? 'border-emerald-500 bg-emerald-500 text-white' : flags[question.id] ? 'border-amber-400 bg-amber-200 text-slate-900' : 'border-slate-200 dark:border-slate-700'}`}>{question.number}</button>)}</div><p className="mt-5 text-sm text-slate-500">Javoblangan: {Object.keys(answers).length}/{questions.length}</p><button onClick={submit} className="btn-primary mt-5 w-full"><Play/> Testni yakunlash</button></aside></section>}
+  </div>
+}
 
-      <div className="no-print flex w-fit gap-1 rounded-2xl bg-white p-1 shadow-sm dark:bg-slate-900">
-        <button onClick={() => setTab('exam')} className={`rounded-xl px-4 py-2 text-sm font-semibold ${tab === 'exam' ? 'bg-slate-900 text-white dark:bg-emerald-500' : 'text-slate-500'}`}>Imtihon</button>
-        <button onClick={() => setTab('errors')} className={`rounded-xl px-4 py-2 text-sm font-semibold ${tab === 'errors' ? 'bg-slate-900 text-white dark:bg-emerald-500' : 'text-slate-500'}`}>Xatolar banki <span className="ml-1 opacity-60">{errorBank.length}</span></button>
-      </div>
-
-      {tab === 'errors' ? <section className="card-panel p-6"><div className="flex items-center gap-3"><XCircle className="text-orange-500"/><div><h2 className="text-xl font-semibold">Xatolar banki</h2><p className="text-sm text-slate-500">So‘nggi testdagi xato savollaringiz</p></div></div>{errorBank.length ? <div className="mt-6 grid gap-3">{errorBank.map(q => <div key={q.id} className="rounded-2xl border border-slate-200 p-4 dark:border-slate-700"><div className="flex justify-between gap-4"><div><p className="text-xs font-bold uppercase text-orange-500">{q.topic}</p><p className="mt-1 font-medium">{q.text}</p></div><button onClick={() => { setCurrent(q.id); setTab('exam'); setSubmitted(false) }} className="btn-secondary"><RotateCcw/> Qayta ishlash</button></div></div>)}</div> : <p className="mt-8 text-center text-slate-500">Hozircha xatolar yo‘q. Testni yakunlang.</p>}</section> : <>
-
-      <section className="grid gap-6 xl:grid-cols-[1.5fr_0.9fr]">
-        <div className="rounded-[32px] border border-white/10 bg-white/80 p-6 shadow-glow backdrop-blur-2xl dark:bg-slate-950/80 dark:border-white/10">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <p className="text-sm font-semibold text-slate-900 dark:text-white">Savol {currentQuestion.id} / 40</p>
-              <h2 className="mt-3 text-xl font-semibold text-slate-900 dark:text-white">{currentQuestion.text}</h2>
-            </div>
-            <button
-              type="button"
-              onClick={handleToggleFlag}
-              className={`inline-flex items-center gap-2 rounded-3xl px-4 py-2 text-sm font-semibold transition ${
-                flags[current] ? 'bg-yellow-400 text-slate-900' : 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200'
-              }`}
-            >
-              <Flag className="h-4 w-4" /> {flags[current] ? 'Flagged' : 'Flag'}
-            </button>
-          </div>
-
-          <div className="mt-6 space-y-4">
-            {currentQuestion.options.map((option, index) => {
-              const isSelected = answers[current] === index
-              return (
-                <button
-                  key={option}
-                  type="button"
-                  onClick={() => handleAnswer(index)}
-                  className={`w-full rounded-3xl border px-4 py-4 text-left transition ${
-                    isSelected
-                      ? 'border-emerald-500 bg-emerald-50 text-emerald-900'
-                      : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-emerald-300 hover:bg-emerald-50/50 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200'
-                  }`}
-                >
-                  <div className="flex items-center justify-between gap-4">
-                    <span className="font-medium">{option}</span>
-                    {isSelected && <span className="rounded-full bg-emerald-600 px-3 py-1 text-xs font-semibold text-white">Tanlandi</span>}
-                  </div>
-                </button>
-              )
-            })}
-          </div>
-
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div className="text-sm text-slate-600 dark:text-slate-300">Javoblangan: {answeredCount} / 40</div>
-            <div className="flex items-center gap-3">
-              <button
-                type="button"
-                onClick={() => setCurrent(Math.max(1, current - 1))}
-                className="rounded-3xl bg-slate-100 px-4 py-3 text-sm font-semibold text-slate-800 transition hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
-              >
-                Oldingi
-              </button>
-              <button
-                type="button"
-                onClick={() => setCurrent(Math.min(40, current + 1))}
-                className="rounded-3xl bg-emerald-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-emerald-700"
-              >
-                Keyingi
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <aside className="space-y-6 rounded-[32px] border border-white/10 bg-slate-50/90 p-6 shadow-glow backdrop-blur-2xl dark:border-white/10 dark:bg-slate-900/80">
-          <div className="rounded-[28px] bg-slate-900/95 p-5 text-white shadow-lg dark:bg-slate-950/90">
-            <p className="text-sm uppercase tracking-[0.3em] text-emerald-400">Natijalar</p>
-            <p className="mt-3 text-3xl font-semibold">{results.level}</p>
-            <p className="mt-2 text-sm leading-6 text-slate-300">Baholanadigan qat'iylik bilan o'z bilimingizni baholang.</p>
-          </div>
-          <div className="rounded-[28px] border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-950">
-            <p className="font-semibold text-slate-900 dark:text-white">Tavsiyalar</p>
-            <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-300">{feedbackForTopics(results.wrongTopics)}</p>
-          </div>
-          <div className="grid gap-3 sm:grid-cols-2">
-            <button
-              type="button"
-              onClick={submitTest}
-              className="inline-flex items-center justify-center gap-2 rounded-3xl bg-emerald-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-emerald-700"
-            >
-              <Play className="h-4 w-4" /> Natijani tekshirish
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setAnswers({})
-                setFlags({})
-                setSubmitted(false)
-                setCurrent(1)
-                setRemaining(30 * 60)
-                setScore(0)
-              }}
-              className="inline-flex items-center justify-center gap-2 rounded-3xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
-            >
-              <RefreshCcw className="h-4 w-4" /> Qayta boshlash
-            </button>
-          </div>
-        </aside>
-      </section>
-
-      </>}
-
-      {submitted && <div className="fixed inset-0 z-50 grid place-items-center overflow-y-auto bg-slate-950/70 p-4"><div className="w-full max-w-2xl rounded-[32px] bg-white p-6 shadow-2xl dark:bg-slate-900 sm:p-8"><div className="certificate rounded-[28px] border-2 border-emerald-500 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,.18),transparent_35%)] p-7 text-center sm:p-10"><Award className="mx-auto h-14 w-14 text-emerald-500"/><p className="mt-5 text-xs font-bold uppercase tracking-[.3em] text-emerald-600">Certificate Academy</p><h2 className="mt-3 text-3xl font-black text-slate-900 dark:text-white">Milliy Sertifikat</h2><p className="mt-5 text-sm text-slate-500">Ushbu sertifikat</p><input value={studentName} onChange={e => setStudentName(e.target.value)} className="mx-auto mt-2 block w-full border-b border-slate-300 bg-transparent pb-2 text-center text-2xl font-semibold outline-none dark:border-slate-600"/><p className="mt-5 text-sm text-slate-500">sinov imtihonini muvaffaqiyatli yakunlagani uchun taqdim etildi</p><div className="mx-auto mt-7 flex max-w-sm justify-center gap-8 rounded-2xl bg-slate-900 p-5 text-white"><div><p className="text-xs text-slate-400">Natija</p><b className="text-2xl">{score}/40</b></div><div className="w-px bg-slate-700"/><div><p className="text-xs text-slate-400">Daraja</p><b className="text-2xl text-emerald-400">{results.level}</b></div></div></div><div className="no-print mt-5 flex justify-end gap-3"><button onClick={() => setSubmitted(false)} className="btn-secondary">Yopish</button><button onClick={() => window.print()} className="btn-primary"><Download/> Yuklab olish / Chop etish</button></div></div></div>}
-
-      <section className="rounded-[32px] border border-white/10 bg-white/80 p-6 shadow-glow backdrop-blur-2xl dark:bg-slate-950/80 dark:border-white/10">
-        <h3 className="text-xl font-semibold text-slate-900 dark:text-white">Savol palitrasi</h3>
-        <div className="mt-5 grid gap-2 sm:grid-cols-6 lg:grid-cols-8">
-          {questionButtons}
-        </div>
-      </section>
-    </div>
-  )
+function Result({ label, value, color }) {
+  return <div className="rounded-2xl bg-slate-50 p-5 dark:bg-slate-800"><p className="text-sm text-slate-500">{label}</p><b className={`mt-2 block text-3xl ${color}`}>{value}</b></div>
 }

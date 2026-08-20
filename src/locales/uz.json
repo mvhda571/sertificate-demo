@@ -1,0 +1,5 @@
+{
+  "applicantBooksNotice": "Abituriyentlar uchun rus va ingliz tillaridagi kitoblar hozircha mavjud emas.",
+  "proctor":{"fullscreenTitle":"To‘liq ekran rejimi","fullscreenMessage":"Testni boshlash uchun to‘liq ekran rejimiga o‘tiladi. Rozimisiz?","cancel":"Bekor qilish","agree":"Roziman","exitTitle":"Testdan chiqish","exitMessage":"Rostdan ham testdan chiqmoqchimisiz? Agar chiqsangiz, natijangiz saqlanmaydi!","stay":"Testda qolish","exit":"Chiqish"},
+  "resultsPage": {"cabinet":"O‘quvchi kabineti","welcome":"Xush kelibsiz, {{name}}!","averageCertificate":"O‘rtacha Milliy Sertifikat bali","lastThreeHint":"Oxirgi {{count}} ta test natijasi asosida","averageTest":"O‘rtacha test natijasi","completedLessons":"Yakunlangan darslar","certificateForecast":"Sertifikat prognozi","totalXp":"Jamlangan XP","history":"Testlar tarixi","empty":"Hali natijalar yo‘q","emptyHint":"Birinchi testingizni yechib, prognozni shakllantiring.","startTest":"Testni boshlash"}
+}
