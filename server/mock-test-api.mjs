@@ -13,15 +13,21 @@ const certificateLevel = percent => {
 }
 
 createServer(async (req, res) => {
+  const requestUrl = new URL(req.url, 'http://localhost')
   const allQuestions = JSON.parse(await readFile(questionsPath, 'utf8'))
-  const questions = allQuestions.filter(question => !question.isSourceError && Number.isInteger(question.correctOption))
-  if (req.method === 'GET' && req.url === '/api/mock-tests/math-2025') {
+  const activeQuestions = allQuestions.filter(question => !question.isSourceError && Number.isInteger(question.correctOption))
+  const variantId = requestUrl.searchParams.get('variantId')
+  const examId = requestUrl.searchParams.get('examId')
+  const questions = examId
+    ? activeQuestions.filter(question => (question.examId || question.variantId) === examId)
+    : variantId ? activeQuestions.filter(question => question.variantId === variantId) : activeQuestions
+  if (req.method === 'GET' && requestUrl.pathname === '/api/mock-tests/math-2025') {
     return json(res, 200, questions.map(({ correctOption, ...question }) => question))
   }
-  if (req.method === 'GET' && req.url === '/api/mock-tests/math-2025/source-errors') {
+  if (req.method === 'GET' && requestUrl.pathname === '/api/mock-tests/math-2025/source-errors') {
     return json(res, 200, allQuestions.filter(question => question.isSourceError))
   }
-  if (req.method === 'POST' && req.url === '/api/mock-tests/math-2025/submit') {
+  if (req.method === 'POST' && requestUrl.pathname === '/api/mock-tests/math-2025/submit') {
     try {
       const { answers = {} } = await body(req)
       const details = questions.map(question => ({ id: question.id, selectedOption: answers[question.id] ?? null, correctOption: question.correctOption, correct: answers[question.id] === question.correctOption }))
